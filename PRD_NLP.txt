@@ -1,0 +1,718 @@
+# Product Requirements Document (PRD)
+
+## Student Feedback Analysis Using Natural Language Processing
+
+**Project Type:** NLP Academic Project
+**Domain:** Education / Student Analytics
+**Primary Technology:** Python, NLP, Machine Learning
+**Dataset:** 5,000-record synthetic student feedback dataset
+**Target NLP Tasks:** Text preprocessing, feature extraction, sentiment classification and analysis
+
+---
+
+## 1. Project Title
+
+### **Student Feedback Analysis Using Natural Language Processing**
+
+---
+
+## 2. Project Overview
+
+The proposed project is an **NLP-based Student Feedback Analysis System** designed to process and analyze textual feedback provided by students. The system applies Natural Language Processing techniques to convert unstructured textual feedback into meaningful information such as sentiment, frequently occurring terms, and feedback patterns.
+
+The project uses a dataset containing **5,000 student records**, where each record is associated with a `Student_ID`, textual `Feedback`, and a sentiment label. The feedback dataset has been synthetically generated for academic/project demonstration purposes and contains **Positive, Neutral, and Negative** feedback categories.
+
+The system will demonstrate important concepts from the NLP syllabus, including **text preprocessing, tokenization, stopword removal, stemming/lemmatization, Bag-of-Words/TF-IDF representation, sentiment analysis, and text classification**.
+
+---
+
+# 3. Problem Statement
+
+Educational institutions collect large amounts of student feedback, but manually reading and analyzing thousands of comments is time-consuming and difficult.
+
+For example:
+
+> "The practical sessions are very helpful, but some topics need more explanation."
+
+and
+
+> "I am struggling to understand some of the concepts in this course."
+
+contain useful information, but conventional numerical analysis cannot directly understand the meaning of such text.
+
+Therefore, there is a need for an NLP-based system that can automatically process student feedback and categorize it into meaningful sentiment classes.
+
+---
+
+# 4. Objectives
+
+The main objectives are:
+
+1. To develop an NLP pipeline for processing student feedback.
+2. To clean and normalize unstructured textual data.
+3. To perform tokenization and remove unnecessary words.
+4. To apply stemming or lemmatization.
+5. To convert textual data into numerical representations using **Bag of Words and/or TF-IDF**.
+6. To perform sentiment classification.
+7. To classify feedback as:
+
+   * Positive
+   * Neutral
+   * Negative
+8. To identify frequently occurring words and patterns.
+9. To evaluate the performance of the NLP classification model.
+10. To provide visual representations of sentiment and word-frequency patterns.
+
+---
+
+# 5. Dataset Requirements
+
+The project will use the generated:
+
+**`Student_Feedback_NLP_5000.csv`**
+
+The dataset contains:
+
+| Attribute    | Description                      |
+| ------------ | -------------------------------- |
+| `Student_ID` | Unique identifier of the student |
+| `Feedback`   | Textual student feedback         |
+| `Sentiment`  | Positive, Neutral, or Negative   |
+
+### Dataset Size
+
+**5,000 records**
+
+### Sentiment Distribution
+
+| Sentiment |   Records |
+| --------- | --------: |
+| Positive  |     1,657 |
+| Neutral   |     1,662 |
+| Negative  |     1,681 |
+| **Total** | **5,000** |
+
+> **Important:** The feedback is synthetically generated and this must be mentioned in the project documentation and presentation.
+
+---
+
+# 6. Functional Requirements
+
+## FR-01: Dataset Loading
+
+The system shall load the student feedback CSV file.
+
+```text
+Student_Feedback_NLP_5000.csv
+```
+
+The system should verify that the required columns exist:
+
+```text
+Student_ID
+Feedback
+Sentiment
+```
+
+---
+
+## FR-02: Data Inspection
+
+The system shall display:
+
+* Number of records
+* Number of columns
+* Missing values
+* Duplicate records
+* Sentiment distribution
+* Sample feedback records
+
+---
+
+## FR-03: Text Cleaning
+
+The system shall clean the raw feedback by:
+
+* Converting text to lowercase
+* Removing unnecessary punctuation
+* Removing unwanted special characters
+* Removing extra whitespace
+* Handling missing text
+
+Example:
+
+```text
+"I Really Enjoy the Course!!!"
+```
+
+becomes:
+
+```text
+"i really enjoy the course"
+```
+
+---
+
+# 7. NLP Processing Pipeline
+
+The main NLP pipeline shall be:
+
+```text
+Raw Student Feedback
+          ↓
+      Text Cleaning
+          ↓
+      Tokenization
+          ↓
+     Stopword Removal
+          ↓
+ Stemming / Lemmatization
+          ↓
+ Feature Extraction
+          ↓
+   Sentiment Classification
+          ↓
+ Positive / Neutral / Negative
+          ↓
+       Evaluation
+```
+
+---
+
+## FR-04: Tokenization
+
+The system shall divide sentences into individual tokens.
+
+Example:
+
+```text
+"I enjoy the practical sessions"
+```
+
+becomes:
+
+```text
+["I", "enjoy", "the", "practical", "sessions"]
+```
+
+---
+
+## FR-05: Stopword Removal
+
+Common words that provide little value for classification may be removed.
+
+Example:
+
+```text
+"I enjoy the practical sessions"
+```
+
+may become:
+
+```text
+["enjoy", "practical", "sessions"]
+```
+
+---
+
+## FR-06: Stemming / Lemmatization
+
+The system may apply stemming or lemmatization to reduce words to their base forms.
+
+Example:
+
+```text
+studying
+studies
+studied
+```
+
+can be transformed toward:
+
+```text
+study
+```
+
+The project should compare or document the selected approach.
+
+---
+
+# 8. Feature Extraction
+
+The system should convert text into numerical vectors because machine-learning algorithms cannot directly process raw sentences.
+
+### Option 1: Bag of Words
+
+Represent each feedback text based on word occurrence.
+
+### Option 2: TF-IDF ⭐ Recommended
+
+Use **Term Frequency–Inverse Document Frequency** to determine the importance of words within the feedback corpus.
+
+The primary implementation should use:
+
+> **TF-IDF**
+
+while Bag of Words can be included as a comparison.
+
+---
+
+# 9. Sentiment Classification
+
+The system shall classify feedback into:
+
+```text
+Positive
+Neutral
+Negative
+```
+
+A suitable machine-learning classifier can be used after TF-IDF feature extraction.
+
+Recommended models:
+
+* Logistic Regression ⭐
+* Multinomial Naive Bayes
+* Support Vector Machine
+
+### Recommended primary model
+
+**Logistic Regression + TF-IDF**
+
+Pipeline:
+
+```text
+Feedback
+   ↓
+Preprocessing
+   ↓
+TF-IDF
+   ↓
+Logistic Regression
+   ↓
+Sentiment
+```
+
+This also provides a clear connection between your **NLP syllabus and machine-learning-based text classification**.
+
+---
+
+# 10. Model Training
+
+The dataset shall be divided into training and testing sets.
+
+Recommended:
+
+```text
+80% → Training
+20% → Testing
+```
+
+Therefore:
+
+```text
+Training = 4,000 records
+Testing  = 1,000 records
+```
+
+A **stratified split** should be used so that the Positive, Neutral, and Negative classes maintain approximately similar proportions in training and testing data.
+
+---
+
+# 11. Model Evaluation
+
+The system shall evaluate the classifier using:
+
+### Accuracy
+
+Measures overall correct predictions.
+
+### Precision
+
+Measures how many predicted samples of a class are actually correct.
+
+### Recall
+
+Measures how many actual samples of a class were correctly identified.
+
+### F1-Score
+
+Provides a balance between precision and recall.
+
+### Confusion Matrix
+
+Shows:
+
+```text
+                 Predicted
+              P      N      Neg
+Actual P
+Actual N
+Actual Neg
+```
+
+The project should report:
+
+* Accuracy
+* Precision
+* Recall
+* F1-score
+* Confusion matrix
+
+---
+
+# 12. NLP Analysis and Visualization
+
+To make the project more substantial from an NLP perspective, the system should include exploratory text analysis.
+
+### Sentiment Distribution
+
+Display:
+
+```text
+Positive → 33.14%
+Neutral  → 33.24%
+Negative → 33.62%
+```
+
+### Word Frequency
+
+Identify frequently occurring words.
+
+Example:
+
+```text
+course
+topics
+practice
+lectures
+concepts
+learning
+```
+
+### Word Cloud
+
+Generate separate word clouds for:
+
+* Positive feedback
+* Neutral feedback
+* Negative feedback
+
+This helps visually identify differences in vocabulary.
+
+---
+
+# 13. Optional Student-Level Analysis
+
+Since every feedback record has a `Student_ID`, the system can allow a user to search for a particular student.
+
+Example:
+
+```text
+Enter Student ID: S1001
+```
+
+Output:
+
+```text
+Student ID: S1001
+
+Feedback:
+"The course is interesting and I understand most topics."
+
+Predicted Sentiment:
+Positive
+```
+
+This makes the project more interactive.
+
+---
+
+# 14. User Interface Requirements
+
+A simple interface can be developed using **Streamlit**.
+
+The interface should provide:
+
+### Dashboard
+
+Display:
+
+* Total feedback records
+* Positive feedback count
+* Neutral feedback count
+* Negative feedback count
+
+### Feedback Analysis
+
+Allow the user to enter:
+
+```text
+Enter student feedback:
+"The practical sessions are very helpful."
+```
+
+The system returns:
+
+```text
+Predicted Sentiment: Positive
+```
+
+### Student Search
+
+Allow:
+
+```text
+Student ID → Feedback → Sentiment
+```
+
+### Visualizations
+
+Display:
+
+* Sentiment distribution chart
+* Word-frequency chart
+* Word clouds
+* Confusion matrix
+
+---
+
+# 15. Technology Stack
+
+### Programming Language
+
+**Python**
+
+### NLP Libraries
+
+* NLTK
+* spaCy (optional)
+
+### Data Processing
+
+* Pandas
+* NumPy
+
+### Machine Learning
+
+* Scikit-learn
+
+### Visualization
+
+* Matplotlib
+* Seaborn
+* WordCloud
+
+### Interface
+
+* Streamlit
+
+### Development Environment
+
+* Jupyter Notebook for experimentation
+* VS Code for final project development
+
+---
+
+# 16. Proposed Project Structure
+
+```text
+Student-Feedback-NLP/
+│
+├── data/
+│   └── Student_Feedback_NLP.csv
+│
+├── notebooks/
+│   └── NLP_Analysis.ipynb
+│
+├── src/
+│   ├── preprocessing.py
+│   ├── feature_extraction.py
+│   ├── model.py
+│   └── evaluation.py
+│
+├── models/
+│   └── sentiment_model.pkl
+│
+├── app/
+│   └── app.py
+│
+├── outputs/
+│   ├── confusion_matrix.png
+│   ├── sentiment_distribution.png
+│   └── wordcloud.png
+│
+├── requirements.txt
+├── README.md
+└── PRD.md
+```
+
+---
+
+# 18. Non-Functional Requirements
+
+### Performance
+
+The system should process individual feedback within a reasonable time.
+
+### Usability
+
+The interface should be simple enough for a faculty member or student to use without technical knowledge.
+
+### Reliability
+
+The system should handle:
+
+* Empty feedback
+* Missing values
+* Unexpected characters
+* Very short feedback
+
+without crashing.
+
+### Maintainability
+
+The NLP pipeline should be divided into separate modules rather than placing the entire implementation in one large file.
+
+### Reproducibility
+
+A fixed `random_state` should be used during dataset splitting and model experiments where appropriate.
+
+---
+
+# 19. Expected Output
+
+For a feedback such as:
+
+> **"The practical sessions are very helpful and I understand the concepts well."**
+
+Expected output:
+
+```text
+Student Feedback Analysis
+──────────────────────────
+
+Feedback:
+The practical sessions are very helpful and
+I understand the concepts well.
+
+Predicted Sentiment:
+POSITIVE
+
+Confidence:
+[Model-dependent]
+
+Important Terms:
+practical
+sessions
+helpful
+understand
+concepts
+```
+
+Another example:
+
+> **"I am struggling to understand some of the concepts."**
+
+Output:
+
+```text
+Predicted Sentiment:
+NEGATIVE
+```
+
+---
+
+# 20. Success Criteria
+
+The project will be considered successfully implemented when:
+
+* [x] 5,000-record feedback dataset is available.
+* [ ] Dataset is loaded and validated.
+* [ ] Text preprocessing pipeline is implemented.
+* [ ] Tokenization is demonstrated.
+* [ ] Stopword removal is demonstrated.
+* [ ] Stemming/lemmatization is implemented.
+* [ ] TF-IDF feature extraction is implemented.
+* [ ] At least one sentiment classifier is trained.
+* [ ] Training/testing methodology is documented.
+* [ ] Accuracy, precision, recall and F1-score are calculated.
+* [ ] Confusion matrix is generated.
+* [ ] Word-frequency analysis is performed.
+* [ ] Sentiment visualization is generated.
+* [ ] Interactive feedback prediction is implemented.
+* [ ] Project limitations, particularly **synthetic feedback**, are documented.
+
+---
+
+# 21. NLP Syllabus Mapping
+
+This is particularly important for your project evaluation.
+
+| NLP Syllabus Topic           | Project Implementation                           |
+| ---------------------------- | ------------------------------------------------ |
+| Introduction to NLP          | Student feedback analysis                        |
+| NLP Pipeline                 | Complete preprocessing → classification pipeline |
+| Tokenization                 | Feedback tokenization                            |
+| NLP Libraries                | NLTK / spaCy                                     |
+| Language/Text Processing     | Text normalization                               |
+| Morphology                   | Stemming / Lemmatization                         |
+| Bag of Words                 | Optional feature representation                  |
+| Word-level Analysis          | Word frequency analysis                          |
+| Embedding Representations    | Optional extension                               |
+| Sentiment Mining             | **Core component**                               |
+| Text Classification          | **Core component**                               |
+| Information Extraction       | Optional keyword extraction                      |
+| Named Entity Recognition     | Optional extension                               |
+| NLP in Information Retrieval | Optional keyword/search feature                  |
+
+### Most important NLP topics demonstrated
+
+**Tokenization + Morphology + Bag of Words/TF-IDF + Sentiment Mining + Text Classification**
+
+That makes the project substantially more aligned with your NLP syllabus than simply adding an NLP column to the KNN project.
+
+---
+
+# 22. Future Scope
+
+The system can later be extended to:
+
+1. Real student feedback instead of synthetic feedback.
+2. Multilingual student feedback analysis.
+3. Emotion detection beyond positive/neutral/negative.
+4. Aspect-based sentiment analysis.
+5. Automatic topic extraction.
+6. Named Entity Recognition.
+7. Transformer-based models such as BERT.
+8. Automatic summarization of large volumes of feedback.
+9. Teacher/course-wise feedback analysis.
+10. Integration with a university student-management system.
+
+---
+
+## Final Project Definition
+
+### **Project Title**
+
+**Student Feedback Analysis Using Natural Language Processing**
+
+### **Input**
+
+5,000 student feedback records containing `Student_ID`, `Feedback`, and `Sentiment`.
+
+### **Processing**
+
+**Cleaning → Tokenization → Stopword Removal → Stemming/Lemmatization → TF-IDF → Classification**
+
+### **Output**
+
+**Positive / Neutral / Negative sentiment + text analysis + visualizations**
+
+### **Primary NLP Concepts**
+
+**Tokenization, Morphology, TF-IDF/Bag of Words, Sentiment Mining, and Text Classification.**
+
+### Important academic note
+
+Because the current 5,000 feedback records were **synthetically generated**, the report should explicitly state that the dataset is intended for **NLP pipeline implementation and academic demonstration**, rather than claiming that it represents authentic student opinions.
